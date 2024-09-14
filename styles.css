@@ -61,6 +61,8 @@ body{
 .tile{
     --x: 0;
     --y: 0;
+    --bg-color: 100%;
+    --color: 20%;
     position: absolute;
     display: flex;
     justify-content: center;
@@ -71,14 +73,26 @@ body{
     border-radius: 1vmin;
     top: calc(var(--y) * (var(--cell-size)  + var(--cell-gap)) + var(--cell-gap));
     left: calc(var(--x) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap) );
+    font-weight: bold;
+    background-color: hsl(56, var(--bg-color), 50%);
+    color: hsl(0, 75%, var(--color) );
+    animation: show 250ms ease-in-out;
+    transition: 100ms ease-in-out;
 }
 
+@keyframes show {
+    0%{
+        opacity: .5;
+        transform:scale(0);
+    }
+    
+}
 
 
 
 /* 
 Colors to fill
-    #**** 2048: FFE300
+    #**** 2048: FFE300 hsl(53, 100%, 50%)
     #**** 1024: ffc400
     # 512: f9e295
     # 256: fec816
