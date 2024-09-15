@@ -19,7 +19,7 @@ body{
 }
 
 #game-heading{
-    margin: 0 auto 2rem;
+    margin: 3rem auto;
     color: #db9901;
     display: flex;
     flex-direction: column;
