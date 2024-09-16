@@ -79,6 +79,7 @@ body{
 }
 
 #score{
+    text-align: center;
     margin: 1rem auto;
     padding: 0.5rem 3rem;
     font-weight: bold;

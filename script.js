@@ -1,13 +1,26 @@
 import Grid from "./Grid.js";
 import Tile from "./Tile.js";
 
+const HIGH_SCORE_KEY = 'highScore'
+
 
 let score = 0;
+let highScore = localStorage.getItem(HIGH_SCORE_KEY) || 0
+
+const highScoreElement = document.getElementById("high-score");
 export let scoreElement = document.getElementById("score");
+
+highScoreElement.innerHTML = `High Score: <br> ${highScore} `
 
 export function updateScore(newPoints) {
     score += newPoints;
-    scoreElement.innerText = `Score: ${score}`;
+    scoreElement.innerHTML = `Score: <br> ${score} `
+
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem(HIGH_SCORE_KEY, highScore);  
+        highScoreElement.innerHTML = `High Score: <br> ${highScore} `
+    }
 }
 
 const resetButton = document.getElementById("reset-button");
