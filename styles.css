@@ -20,7 +20,7 @@ body{
 
 #game-heading{
     margin: 3rem auto;
-    color: #db9901;
+    color: #FFC700;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,13 +42,13 @@ body{
 #game-board{
     box-sizing: border-box;
     display: grid;
-    background-color:  #6d3803fb;
+    background-color:  #8446088c;
     grid-template-columns: repeat(var(--grid-size),var(--cell-size));
     grid-template-rows: repeat(var(--grid-size),var(--cell-size));
     gap:var(--cell-gap);
     border-radius: 1vmin;
     padding: var(--cell-gap);
-    font-size: 6vmin;
+    font-size: 6.5vmin;
     position: relative;
 }
 
@@ -69,7 +69,8 @@ body{
     left: calc(var(--x) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap) );
     font-weight: bold;
     background-color: hsl(var(--bg-hue), var(--bg-sat), var(--bg-light));
-    animation: show 250ms ease-in-out;
+    color: var(--num-color);
+    animation: show 300ms ease-in-out;
     transition: 100ms ease-in-out;
 }
 
@@ -82,20 +83,4 @@ body{
 }
 
 
-
-/* 
-Colors to fill
-    #**** 2048: FFE300 hsl(53, 100%, 50%)
-    #**** 1024: ffc400
-    # 512: f9e295
-    # 256: fec816
-    # 128: f9df1d
-    # 64: fccc2d
-    # 32: fde73c
-    # 16: ffc04a
-    # 8: fdea5e
-    $ 4: fcde79
-    # 2: #ffefbb
-    empty: fffae5
-*/
 
