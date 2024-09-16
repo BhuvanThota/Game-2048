@@ -1,5 +1,8 @@
+import { updateScore } from './script.js';
+
+
 const GRID_SIZE = 4;
-const CELL_SIZE = 18;
+const CELL_SIZE = 16;
 const CELL_GAP = 2.5;
 
 
@@ -98,6 +101,9 @@ class Cell{
   mergeTiles(){
     if (this.tile == null || this.mergeTile == null) return
     this.tile.value = this.tile.value + this.mergeTile.value
+
+    updateScore(this.tile.value);
+
     this.mergeTile.remove() 
     this.mergeTile = null
   }

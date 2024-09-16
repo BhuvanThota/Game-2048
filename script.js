@@ -1,15 +1,44 @@
 import Grid from "./Grid.js";
 import Tile from "./Tile.js";
 
+
+let score = 0;
+export let scoreElement = document.getElementById("score");
+
+export function updateScore(newPoints) {
+    score += newPoints;
+    scoreElement.innerText = `Score: ${score}`;
+}
+
+const resetButton = document.getElementById("reset-button");
+
+resetButton.onclick = resetGame;
+
 const gameBoard = document.getElementById("game-board");
 
 const grid = new Grid(gameBoard);
 grid.randomEmptyCell().tile = new Tile(gameBoard);
 grid.randomEmptyCell().tile = new Tile(gameBoard);
 
-
-
 setupInput();
+
+function resetGame() {
+    // Reset score
+    score = 0;
+    scoreElement.innerText = `Score: ${score}`;
+
+    // Clear the game board
+    gameBoard.innerHTML = ''; // Remove all tiles
+    
+    // Reinitialize the grid and add two new tiles
+    const grid = new Grid(gameBoard);
+    grid.randomEmptyCell().tile = new Tile(gameBoard);
+    grid.randomEmptyCell().tile = new Tile(gameBoard);
+
+    // Set up input again
+    setupInput();
+}
+
 
 function setupInput() {
   window.addEventListener("keydown", handleInput, { once: true });
