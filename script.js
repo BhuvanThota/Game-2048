@@ -30,36 +30,87 @@ resetButton.onclick = resetGame;
 const gameBoard = document.getElementById("game-board");
 
 const grid = new Grid(gameBoard);
+let startX, startY, endX, endY;
+
 grid.randomEmptyCell().tile = new Tile(gameBoard);
 grid.randomEmptyCell().tile = new Tile(gameBoard);
 
 setupInput();
 
-function resetGame() {
-    // Reset score
-    score = 0;
-    scoreElement.innerText = `Score: ${score}`;
-
-    // Clear the game board
-    gameBoard.innerHTML = ''; // Remove all tiles
-    
-    // Reinitialize the grid and add two new tiles
-    const grid = new Grid(gameBoard);
-    grid.randomEmptyCell().tile = new Tile(gameBoard);
-    grid.randomEmptyCell().tile = new Tile(gameBoard);
-
-    // Set up input again
-    setupInput();
-}
-
 
 function setupInput() {
   window.addEventListener("keydown", handleInput, { once: true });
+  gameBoard.addEventListener("touchstart", handleTouchStart, {once:true, passive: false});
+}
+
+async function handleTouchStart(e){
+  stopInput();
+  e.preventDefault();
+  let keyValue;
+  const touch =  e.touches[0];
+  startX = touch.clientX;
+  startY = touch.clientY;
+
+  gameBoard.addEventListener("touchend", handleTouchEnd , {once:true});
+}
+  
+  async function handleTouchEnd(event) {
+    const touch = event.changedTouches[0];
+    endX = touch.clientX;
+    endY = touch.clientY;
+  
+    const dx = endX - startX;
+    const dy = endY - startY;
+  
+    if (Math.abs(dx) > Math.abs(dy)) {
+      if (dx > 0) {
+        if (!canMoveRight()) {
+          setupInput();
+          return;
+        }
+        await moveRight();
+      } else {
+        if (!canMoveLeft()) {
+          setupInput();
+          return;
+        }
+        await moveLeft();
+      }
+    } else {
+      if (dy > 0) {
+        if (!canMoveDown()) {
+          setupInput();
+          return;
+        }
+        await moveDown();
+      } else {
+        if (!canMoveUp()) {
+          setupInput();
+          return;
+        }
+        await moveUp();
+      }
+    }
+  
+  grid.cells.forEach((cell) => cell.mergeTiles());
+  const newTile = new Tile(gameBoard);
+  grid.randomEmptyCell().tile = newTile;
+
+  if(!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight() ){
+    newTile.waitForTransition(true).then(() => {
+        alert("Game Over")
+    })
+    return 
+  }
+
+  setupInput();
 }
 
 async function handleInput(e) {
+  stopInput()
   switch (e.key) {
     case "ArrowUp":
+    case "w":
       if (!canMoveUp()) {
         setupInput();
         return;
@@ -67,6 +118,7 @@ async function handleInput(e) {
       await moveUp();
       break;
     case "ArrowDown":
+    case "s":
       if (!canMoveDown()) {
         setupInput();
         return;
@@ -74,6 +126,7 @@ async function handleInput(e) {
       await moveDown();
       break;
     case "ArrowLeft":
+    case "a":
       if (!canMoveLeft()) {
         setupInput();
         return;
@@ -81,6 +134,7 @@ async function handleInput(e) {
       await moveLeft();
       break;
     case "ArrowRight":
+    case "d":
       if (!canMoveRight()) {
         setupInput();
         return;
@@ -105,6 +159,12 @@ async function handleInput(e) {
 
   setupInput();
 }
+
+function stopInput(){
+  window.removeEventListener("keydown", handleInput);
+  gameBoard.removeEventListener("touchstart", handleTouchStart);
+}
+
 
 function moveUp() {
   return slideTiles(grid.cellsByColumn);
@@ -176,3 +236,23 @@ function canMoveLeft(){
 function canMoveRight(){
     return canMove(grid.cellsByRow.map((row) => [...row].reverse()))
 }
+
+
+function resetGame() {
+  stopInput();
+  // Reset score
+  score = 0;
+  scoreElement.innerText = `Score: ${score}`;
+
+  // Clear the game board
+  gameBoard.innerHTML = ''; // Remove all tiles
+  
+  // Reinitialize the grid and add two new tiles
+  const grid = new Grid(gameBoard);
+  grid.randomEmptyCell().tile = new Tile(gameBoard);
+  grid.randomEmptyCell().tile = new Tile(gameBoard);
+
+  // Set up input again
+  setupInput();
+}
+

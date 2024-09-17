@@ -12,14 +12,15 @@ body{
     flex-direction: column;
     justify-content: baseline;
     align-items: center;
+    position: static;
 
-    min-height: 100vh;
+    height: 100vh;
     margin:0;
     font-size: 3vmin;
 }
 
 #game-heading{
-    margin: 3rem auto 1rem;
+    margin: 2rem auto 1rem;
     color: #FFC700;
     display: flex;
     flex-direction: column;
@@ -33,6 +34,23 @@ body{
     padding: 1vmin 3vmin;
     border-radius: 8px;
     text-align: center;
+}
+
+#game-heading > img{
+    display: inline-block;
+    max-width: 120px;
+}
+
+@media (max-width: 400px ){
+
+    #game-heading{
+        margin-top: 3.5rem;
+    }
+    #game-heading > img{
+        margin-top: 2rem;
+        max-width: 150px;
+    }
+
 }
 
 
@@ -89,11 +107,7 @@ body{
     border-radius: 1rem;
 }
 
-#game-heading > img{
-    display: inline-block;
-    max-width: 150px;
 
-}
 
 #game-board{
     box-sizing: border-box;
