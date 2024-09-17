@@ -8,6 +8,8 @@ const highScoreElement = document.getElementById("high-score");
 export let scoreElement = document.getElementById("score");
 
 resetButton.removeEventListener("click", resetGame);
+
+
 let score = 0;
 let highScore = localStorage.getItem(HIGH_SCORE_KEY) || 0;
 
