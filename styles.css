@@ -7,7 +7,7 @@
 
 
 body{
-    background-image: radial-gradient(circle, #c9c7bb, #aa9e71,#8f6206);
+    background-image: radial-gradient(circle, #c9c7bb, #7e7e7e,#4d4d4d);
     display: flex;
     flex-direction: column;
     justify-content: baseline;
